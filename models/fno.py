@@ -19,9 +19,9 @@ class FNOBlock(eqx.Module):
     def __init__(self, num_modes, latent_size, key: random.PRNGKey, initializer=glorot_normal(), dtype=jnp.float32):
         self.num_modes = num_modes
         self.d_v = latent_size
-        key, subkey = random.split(key)
-        self.linear_W = initializer(subkey, (latent_size, latent_size), dtype=dtype)
-        self.transform_R = initializer(subkey, (num_modes, latent_size, latent_size), dtype=dtype)
+        key, *subkey = random.split(key, 3)
+        self.linear_W = initializer(subkey[0], (latent_size, latent_size), dtype=dtype)
+        self.transform_R = initializer(subkey[1], (num_modes, latent_size, latent_size), dtype=dtype)
 
     def __call__(self, v):
         pass
